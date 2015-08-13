@@ -7,3 +7,7 @@ Concourse CI resource for sending notifications to Flowdock.
 * Change `.thread_id-example` to `.thread_id`. The thread ID does not need to be changed unless you do not wish to start at 1.
 
 The purpose of the separation is to avoid thread collision where a message is posted to the wrong thread. If a thread ID is reused the original message will not be deleted, the new message will merely be placed in a potentially unrelated thread.
+
+### Basic Test
+
+To run a basic test with the pre-populated test values, simply run the `test.sh` script.
