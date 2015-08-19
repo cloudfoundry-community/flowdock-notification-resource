@@ -1,5 +1,8 @@
 #concourse_pipeline_baseurl="http://10.202.75.109/pipelines/
 
+MESSAGE=${1:-}
+API_URL=${2:-}
+
 if [[ -z ${MESSAGE} ]]; then
   echo -e "Cannot post message to Flowdock. \n Reason: Message is unset or empty."
   exit 1

@@ -21,7 +21,7 @@ HEADER="\"flow_token\": \"${concourse_flow_token}\", \"event\": \"${concourse_ms
 MSGINFO="\"title\": \"${concourse_msg_title}\", \"external_thread_id\": \"${concourse_msg_threadID}\""
 MSGTHREAD="\"thread\": {\"title\": \"${concourse_msg_thread_title}\", \"fields\": [{\"label\": \"${concourse_msg_field_label}\", \"value\": \"${concourse_msg_field_value}\"}], \"body\": \"${concourse_msg_body}\", \"external_url\": \"${concourse_pipeline_url}\", \"status\": {\"color\": \"${concourse_msg_status_color}\", \"value\": \"${concourse_msg_status_value}\"}}"
 
-export MESSAGE="{${HEADER}, ${MSGINFO}, ${MSGTHREAD}}"
-export API_URL="https://api.flowdock.com/messages"
+MESSAGE="{${HEADER}, ${MSGINFO}, ${MSGTHREAD}}"
+API_URL="https://api.flowdock.com/messages"
 
-./run.sh
+./run.sh ${MESSAGE} ${API_URL}
