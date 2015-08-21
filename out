@@ -11,20 +11,20 @@ payload=$(mktemp /tmp/resource-in.XXXXXX)
 
 cat > $payload <&0
 
-concourse_display_name=$(jq -c .params.username)  #"Concourse Drone Docker [Test]"
+concourse_display_name=$(jq -c ".params.username" < ${payload})
 concourse_msg_threadID=10000
-concourse_avatar=$(jq -c .params.icon_url)  #"http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png"
+concourse_avatar=$(jq -c ".params.icon_url" < ${payload})
 concourse_pipeline_url="http://192.168.100.4:8080/pipelines/"
-concourse_flow_token=$(jq -c .params.flow_token)
-concourse_msg_event="activity" # activity or discussion
-concourse_msg_status_value=$(jq -c .params.msg_status_value) #"Drone Test"
-concourse_msg_status_color=$(jq -c .params.statuscolor) #"purple"
-concourse_pipeline_name=$(jq -c .params.pipeline_name) #"Test Pipeline"
-concourse_msg_title=$(jq -c .params.msg_title) #"TESTING WITH TEST SCRIPT"
-concourse_msg_thread_title=$(jq -c .params.thread_title) #"Yet Another Test: ${concourse_msg_threadID}"
+concourse_flow_token=$(jq -c ".params.flow_token" < ${payload})
+concourse_msg_event="activity"
+concourse_msg_status_value=$(jq -c ".params.msg_status_value" < ${payload})
+concourse_msg_status_color=$(jq -c ".params.statuscolor" < ${payload})
+concourse_pipeline_name=$(jq -c ".params.pipeline_name" < ${payload})
+concourse_msg_title=$(jq -c ".params.msg_title" < ${payload})
+concourse_msg_thread_title=$(jq -c ".params.thread_title" < ${payload})
 concourse_msg_field_label="Status Message"
 concourse_msg_field_value="All tests passed."
-concourse_msg_body=$(jq -c .params.message) #"This message is to test the Concourse FlowDrone integration in a Docker container."
+concourse_msg_body=$(jq -c ".params.message" < ${payload})
 
 HEADER="\"flow_token\": \"${concourse_flow_token}\", \"event\": \"${concourse_msg_event}\", \"author\": {\"name\": \"${concourse_display_name}\", \"avatar\": \"${concourse_avatar}\"}"
 MSGINFO="\"title\": \"${concourse_msg_title}\", \"external_thread_id\": \"${concourse_msg_threadID}\""
@@ -44,7 +44,6 @@ if [[ -z ${API_URL} ]]; then
 fi
 
 COMMAND="curl -i -X POST -H \"Content-Type: application/json\" -d '${MESSAGE}' ${API_URL}"
-#echo $COMMAND
 eval $COMMAND
 
 jq -n '{version:{ref:0}}' >&3
