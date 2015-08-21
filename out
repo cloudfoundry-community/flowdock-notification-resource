@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 exec 3>&1
 exec 1>&2
@@ -11,20 +12,20 @@ payload=$(mktemp /tmp/resource-in.XXXXXX)
 
 cat > $payload <&0
 
-concourse_display_name=$(jq -c ".params.username" < ${payload})
+concourse_display_name=$(jq -r ".params.username" < ${payload})
 concourse_msg_threadID=10000
-concourse_avatar=$(jq -c ".params.icon_url" < ${payload})
+concourse_avatar=$(jq -r ".params.icon_url" < ${payload})
 concourse_pipeline_url="http://192.168.100.4:8080/pipelines/"
-concourse_flow_token=$(jq -c ".params.flow_token" < ${payload})
+concourse_flow_token=$(jq -r ".params.flow_token" < ${payload})
 concourse_msg_event="activity"
-concourse_msg_status_value=$(jq -c ".params.msg_status_value" < ${payload})
-concourse_msg_status_color=$(jq -c ".params.statuscolor" < ${payload})
-concourse_pipeline_name=$(jq -c ".params.pipeline_name" < ${payload})
-concourse_msg_title=$(jq -c ".params.msg_title" < ${payload})
-concourse_msg_thread_title=$(jq -c ".params.thread_title" < ${payload})
+concourse_msg_status_value=$(jq -r ".params.msg_status_value" < ${payload})
+concourse_msg_status_color=$(jq -r ".params.statuscolor" < ${payload})
+concourse_pipeline_name=$(jq -r ".params.pipeline_name" < ${payload})
+concourse_msg_title=$(jq -r ".params.msg_title" < ${payload})
+concourse_msg_thread_title=$(jq -r ".params.thread_title" < ${payload})
 concourse_msg_field_label="Status Message"
 concourse_msg_field_value="All tests passed."
-concourse_msg_body=$(jq -c ".params.message" < ${payload})
+concourse_msg_body=$(jq -r ".params.message" < ${payload})
 
 HEADER="\"flow_token\": \"${concourse_flow_token}\", \"event\": \"${concourse_msg_event}\", \"author\": {\"name\": \"${concourse_display_name}\", \"avatar\": \"${concourse_avatar}\"}"
 MSGINFO="\"title\": \"${concourse_msg_title}\", \"external_thread_id\": \"${concourse_msg_threadID}\""
