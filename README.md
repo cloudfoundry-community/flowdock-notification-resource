@@ -1,13 +1,36 @@
-# flowdock-notification-concourse-resource
+# flowdock-concourse-notification-resource
 Concourse CI resource for sending notifications to Flowdock.
 
-## Setup
+## Requirements
 
-* Change `.flow_token-example` to `.flow_token` and replace the psuedotoken with the flow token that was generated when you set up the source for your developer application.
-* Change `.thread_id-example` to `.thread_id`. The thread ID does not need to be changed unless you do not wish to start at 1.
+* Flowdock account with `admin` access or a trial account for testing
+ * Setup your Flowdock account for integration testing by following the [Flowdock documentation](https://www.flowdock.com/api/integration-getting-started). This test does not use OAUTH2.0.
+* Vagrant version `1.6.5`
+* VirtualBox version `4.3.x`
+* `fly` version `0.0.1` installed (this is the Concourse CLI client)
 
-The purpose of the separation is to avoid thread collision where a message is posted to the wrong thread. If a thread ID is reused the original message will not be deleted, the new message will merely be placed in a potentially unrelated thread.
+Make sure you save your flow token, which is generated when you set up the source for your developer application, as it **cannot be recovered later**.
 
-### Basic Test
+## Testing
 
-To run a basic test with the pre-populated test values, simply run the `test.sh` script.
+### Setup
+
+In the `test` directory, remove the `example` from the file names:
+
+```
+mv credentials{-example,}.yml
+mv pipeline{-example,}.yml
+mv test{-example,}.yml
+```
+
+Put your flow token in the `test.sh` and `credentials.yml` files.
+
+Setup the test environment by using our [Concourse Tutorials](https://github.com/starkandwayne/concourse-tutorial) and following the **Getting Started** and **Target Concourse** sections, which also include instructions for how to install `fly`.
+
+Note that you do not need to clone the tutorial - the files you need for testing are all in the `test` directory.
+
+#### Basic Shell Test
+
+Before proceeding please run the `test/test.sh` script to verify your flow token is working correctly.
+
+#### Concourse Testing
