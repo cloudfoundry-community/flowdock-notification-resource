@@ -12,10 +12,10 @@ payload=$(mktemp /tmp/resource-in.XXXXXX)
 cat > $payload <&0
 
 concourse_display_name=$(jq -c .params.username)  #"Concourse Drone Docker [Test]"
-concourse_msg_threadID=$(cat .thread_id)
+concourse_msg_threadID=10000
 concourse_avatar=$(jq -c .params.icon_url)  #"http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png"
 concourse_pipeline_url="http://192.168.100.4:8080/pipelines/"
-concourse_flow_token=$(cat .flow_token)
+concourse_flow_token=$(jq -c .params.flow_token)
 concourse_msg_event="activity" # activity or discussion
 concourse_msg_status_value=$(jq -c .params.msg_status_value) #"Drone Test"
 concourse_msg_status_color=$(jq -c .params.statuscolor) #"purple"
@@ -36,6 +36,8 @@ API_URL="https://api.flowdock.com/messages"
 
 ##curl -X POST --data-urlencode "payload=$body" $webhook_url
 
-./run.sh ${MESSAGE} ${API_URL}
+##./run.sh ${MESSAGE} ${API_URL}
+COMMAND="curl -i -X POST -H \"Content-Type: application/json\" -d '${MESSAGE}' ${API_URL}"
+eval $COMMAND
 
 jq -n '{version:{ref:0}}' >&3
