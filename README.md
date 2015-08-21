@@ -5,8 +5,8 @@ Concourse CI resource for sending notifications to Flowdock.
 
 * Flowdock account with `admin` access or a trial account for testing
  * Setup your Flowdock account for integration testing by following the [Flowdock documentation](https://www.flowdock.com/api/integration-getting-started). This test does not use OAUTH2.0.
-* Vagrant version `1.6.5`
-* VirtualBox version `4.3.x`
+* Vagrant version `1.6.5` (not `1.7.x`)
+* VirtualBox version `4.3.x` (not `5.x`)
 * `fly` version `0.0.1` installed (this is the Concourse CLI client)
 
 Make sure you save your flow token, which is generated when you set up the source for your developer application, as it **cannot be recovered later**.
