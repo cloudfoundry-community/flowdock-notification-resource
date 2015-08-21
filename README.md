@@ -23,7 +23,7 @@ cp -r test/* local
 cd local
 mv credentials{-example,}.yml
 mv pipeline{-example,}.yml
-mv test{-example,}.yml
+mv test{-example,}.sh
 ```
 
 Note that the `local` directory is in `.gitignore`.
