@@ -1,0 +1,43 @@
+---
+jobs:
+- name: flowdock-hello-world-test
+  public: true
+
+  plan:
+  - get: resource-tutorial
+  - task: hello-world
+    file: resource-tutorial/01_task_hello_world/task_hello_world.yml
+    on_failure:
+      put: flowdock-drone
+      params:
+        text: This is testing integration with Docker containers.
+        thread_title: Testing with Docker
+        msg_status_value: FAIL
+        msg_title: Please work.
+        username: Concourse
+        pipeline_name: hello-world
+        statuscolor: cyan
+        icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+        flow_token: {{flow_token}}
+    on_success:
+      put: flowdock-drone
+      params:
+        message: This is testing integration with Docker containers.
+        thread_title: Testing with Docker
+        msg_status_value: SUCCESS
+        msg_title: Please work.
+        username: Concourse
+        pipeline_name: hello-world
+        statuscolor: lime
+        icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+        flow_token: {{flow_token}}
+
+resources:
+- name: resource-tutorial
+  type: git
+  source:
+    uri: https://github.com/drnic/concourse-tutorial.git
+- name: flowdock-drone
+  type: flowdock-notification
+  source:
+    name: https://api.flowdock.com/messages

@@ -1,4 +1,4 @@
-.flow_token
-.thread_id
 notes.md
 dodocker-setup.sh
+credentials.yml
+pipeline.yml

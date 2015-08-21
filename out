@@ -31,13 +31,20 @@ MSGINFO="\"title\": \"${concourse_msg_title}\", \"external_thread_id\": \"${conc
 MSGTHREAD="\"thread\": {\"title\": \"${concourse_msg_thread_title}\", \"fields\": [{\"label\": \"${concourse_msg_field_label}\", \"value\": \"${concourse_msg_field_value}\"}], \"body\": \"${concourse_msg_body}\", \"external_url\": \"${concourse_pipeline_url}\", \"status\": {\"color\": \"${concourse_msg_status_color}\", \"value\": \"${concourse_msg_status_value}\"}}"
 
 MESSAGE="{${HEADER}, ${MSGINFO}, ${MSGTHREAD}}"
-##webhook_url=$(jq -r '.source.url' < $payload)
 API_URL="https://api.flowdock.com/messages"
 
-##curl -X POST --data-urlencode "payload=$body" $webhook_url
+if [[ -z ${MESSAGE} ]]; then
+  echo -e "Cannot post message to Flowdock. \n Reason: Message is unset or empty."
+  exit 1
+fi
 
-##./run.sh ${MESSAGE} ${API_URL}
+if [[ -z ${API_URL} ]]; then
+  echo -e "Cannot post message to Flowdock. \n Reason: API URL is unset or empty."
+  exit 1
+fi
+
 COMMAND="curl -i -X POST -H \"Content-Type: application/json\" -d '${MESSAGE}' ${API_URL}"
+#echo $COMMAND
 eval $COMMAND
 
 jq -n '{version:{ref:0}}' >&3
