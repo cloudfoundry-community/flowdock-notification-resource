@@ -15,7 +15,7 @@ cat > $payload <&0
 concourse_display_name=$(jq -r ".params.username" < ${payload})
 concourse_msg_threadID=10000
 concourse_avatar=$(jq -r ".params.icon_url" < ${payload})
-concourse_pipeline_url="http://192.168.100.4:8080/pipelines/"
+concourse_pipeline_url="http://192.168.100.4:8080/"
 concourse_flow_token=$(jq -r ".params.flow_token" < ${payload})
 concourse_msg_event="activity"
 concourse_msg_status_value=$(jq -r ".params.msg_status_value" < ${payload})
@@ -46,4 +46,4 @@ fi
 
 curl -i -X POST -H "Content-Type: application/json" -d "${MESSAGE}" ${API_URL}
 
-jq -n '{version:{ref:0}}' >&3
+jq -n '{version:"alpha"}' >&3
