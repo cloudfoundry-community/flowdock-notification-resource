@@ -44,7 +44,6 @@ if [[ -z ${API_URL} ]]; then
   exit 1
 fi
 
-COMMAND="curl -i -X POST -H \"Content-Type: application/json\" -d '${MESSAGE}' ${API_URL}"
-eval $COMMAND
+curl -i -X POST -H "Content-Type: application/json" -d "${MESSAGE}" ${API_URL}
 
 jq -n '{version:{ref:0}}' >&3
