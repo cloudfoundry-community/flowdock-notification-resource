@@ -14,7 +14,7 @@ echo ${external_thread_id}
 mkdir -p $1
 
 if [[ ! -e $1/.thread_id ]]; then
-  echo "000" > $1/.thread_id
+  echo external_thread_id > $1/.thread_id
 fi
 
 thread_id=$(cat $1/.thread_id)

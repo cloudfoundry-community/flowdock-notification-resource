@@ -46,6 +46,10 @@ fi
 
 curl -i -X POST -H "Content-Type: application/json" -d "${MESSAGE}" ${API_URL}
 
+thread_id=$(cat $1/.thread_id)
+echo $(expr $thread_id + 1) > $1/.thread_id
+
+`
 jq -n "{
-  version: {ref: ${concourse_msg_threadID}}
+  version: {ref: $(expr $thread_id + 1)}
 }" >&3
