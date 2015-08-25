@@ -46,7 +46,6 @@ fi
 
 curl -i -X POST -H "Content-Type: application/json" -d "${MESSAGE}" ${API_URL}
 
-`
 jq -n "{
   version: {ref: $concourse_msg_threadID}
 }" >&3
