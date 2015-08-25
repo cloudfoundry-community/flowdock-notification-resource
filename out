@@ -8,12 +8,12 @@ exec 1>&2
 
 PATH=/usr/local/bin:$PATH
 
-payload=$(mktemp /tmp/resource-in.XXXXXX)
+payload=$(mktemp /tmp/flowdock-out.XXXXXX)
 
 cat > $payload <&0
 
 concourse_display_name=$(jq -r ".params.username" < ${payload})
-concourse_msg_threadID=10000
+concourse_msg_threadID=101010 # $(jq -r '.params.external_thread_id // ""' < ${payload})
 concourse_avatar=$(jq -r ".params.icon_url" < ${payload})
 concourse_pipeline_url="http://192.168.100.4:8080/"
 concourse_flow_token=$(jq -r ".params.flow_token" < ${payload})
@@ -46,4 +46,6 @@ fi
 
 curl -i -X POST -H "Content-Type: application/json" -d "${MESSAGE}" ${API_URL}
 
-jq -n '{version:"alpha"}' >&3
+jq -n "{
+  version: {ref: ${concourse_msg_threadID}}
+}" >&3

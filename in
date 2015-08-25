@@ -1,3 +1,24 @@
 #!/bin/bash
 
-echo '{"version": {"ref:": 000}}'
+set -e
+set -x
+
+exec 3>&1
+exec 1>&2
+
+payload=$(mktemp /tmp/flowdock-in.XXXXXX)
+cat > $payload <&0
+
+external_thread_id=$(jq -r '.params.external_thread_id // ""' < ${payload})
+echo ${external_thread_id}
+mkdir -p $1
+
+if [[ ! -e $1/.thread_id ]]; then
+  echo "000" > $1/.thread_id
+fi
+
+thread_id=$(cat $1/.thread_id)
+
+jq -n "{
+  version: {ref: ${thread_id}}
+}" >&3
