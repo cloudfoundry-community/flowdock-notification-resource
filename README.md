@@ -30,6 +30,8 @@ Note that the `local` directory is in `.gitignore`.
 
 Put your flow token in the `test.sh` and `credentials.yml` files.
 
+Put your Concourse URL in your `credentials.yml` file.
+
 Setup the test environment by using our [Concourse Tutorials](https://github.com/starkandwayne/concourse-tutorial) and following the **Getting Started** and **Target Concourse** sections, which also include instructions for how to install `fly`.
 
 Note that you do not need to clone the tutorial - all the files you need for testing are all in the `test`/`local` directory.
