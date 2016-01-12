@@ -9,6 +9,4 @@ exec 1>&2
 payload=$(mktemp /tmp/flowdock-in.XXXXXX)
 cat > $payload <&0
 
-jq -n "{
-  version: {ref: 0}
-}" >&3
+jq -n "{version:{timestamp:\"$(date +%s)\"}}" >&3
