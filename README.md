@@ -1,4 +1,4 @@
-# flowdock-concourse-notification-resource
+# flowdock-notification-resource
 Concourse CI resource for sending notifications to Flowdock.
 
 ## Requirements
@@ -65,7 +65,7 @@ monit restart beacon
 
 The line you need to append to the `workers.json` file is:
 ```
-,{"image":"docker:///qofthings/flowdock-concourse-notification-resource","type":"flowdock-notification"}]}
+,{"image":"docker:///starkandwayne/flowdock-notification-resource","type":"flowdock-notification"}]}
 ```
 
 Exit out of the Vagrant ssh session and deploy the pipeline with:
