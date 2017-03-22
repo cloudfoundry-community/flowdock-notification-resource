@@ -15,6 +15,9 @@ concourse_msg_thread_title="Yet Another Test: ${concourse_msg_threadID}"
 concourse_msg_field_label="Status Message"
 concourse_msg_field_value="All tests passed."
 concourse_msg_body="This message is to test the Concourse FlowDrone integration."
+http_proxy=""
+https_proxy=""
+no_proxy=""
 
 HEADER="\"flow_token\": \"${concourse_flow_token}\", \"event\": \"${concourse_msg_event}\", \"author\": {\"name\": \"${concourse_display_name}\", \"avatar\": \"${concourse_avatar}\"}"
 MSGINFO="\"title\": \"${concourse_msg_title}\", \"external_thread_id\": \"${concourse_msg_threadID}\""
@@ -33,6 +36,6 @@ if [[ -z ${API_URL} ]]; then
   exit 1
 fi
 
-COMMAND="curl -i -X POST -H \"Content-Type: application/json\" -d '${MESSAGE}' ${API_URL}"
+COMMAND="http_proxy=\"${http_proxy}\" https_proxy=\"${https_proxy}\" no_proxy=\"${no_proxy}\" curl -i -X POST -H \"Content-Type: application/json\" -d '${MESSAGE}' ${API_URL}"
 #echo $COMMAND
 eval $COMMAND

@@ -27,6 +27,10 @@ concourse_msg_field_label="Status Message"
 concourse_msg_field_value="All tests passed."
 concourse_msg_body=$(jq -r ".params.message" < ${payload})
 
+http_proxy=$(jq -r ".source.http_proxy" < ${payload})
+https_proxy=$(jq -r ".source.https_proxy" < ${payload})
+no_proxy=$(jq -r ".source.no_proxy" < ${payload})
+
 HEADER="\"flow_token\": \"${concourse_flow_token}\", \"event\": \"${concourse_msg_event}\", \"author\": {\"name\": \"${concourse_display_name}\", \"avatar\": \"${concourse_avatar}\"}"
 MSGINFO="\"title\": \"${concourse_msg_title}\", \"external_thread_id\": \"${concourse_msg_threadID}\""
 MSGTHREAD="\"thread\": {\"title\": \"${concourse_msg_thread_title}\", \"fields\": [{\"label\": \"${concourse_msg_field_label}\", \"value\": \"${concourse_msg_field_value}\"}], \"body\": \"${concourse_msg_body}\", \"external_url\": \"${concourse_pipeline_url}\", \"status\": {\"color\": \"${concourse_msg_status_color}\", \"value\": \"${concourse_msg_status_value}\"}}"
@@ -44,6 +48,7 @@ if [[ -z ${API_URL} ]]; then
   exit 1
 fi
 
+http_proxy="${http_proxy}" https_proxy="${https_proxy}" no_proxy="${no_proxy}" \
 curl -i -X POST -H "Content-Type: application/json" -d "${MESSAGE}" ${API_URL}
 
 jq -n "{version:{timestamp:\"$(date +%s)\"}}" >&3
