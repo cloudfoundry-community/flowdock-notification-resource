@@ -2,7 +2,7 @@
 # settings for the flowdock-notification-resource pipeline
 meta:
   target: sw
-  url:    https://ci.vsphere.starkandwayne.com
+  url:    https://ci.starkandwayne.com
   name:   flowdock-notification
 
   initial_version: 0.0.1
@@ -15,10 +15,10 @@ meta:
     email:    (( vault "secret/dockerhub:email" ))
     username: (( vault "secret/dockerhub:username" ))
     password: (( vault "secret/dockerhub:password" ))
-    repository: starkandwayne/flowdock-notification-resource
+    repository: cfcommunity/flowdock-notification-resource
 
   github:
-    owner: starkandwayne
+    owner: cloudfoundry-community
     repo:  flowdock-notification-resource
     private_key:  (( vault "secret/pipelines/flowdock-notification-resource/github:private" ))
     access_token: (( vault "secret/pipelines/flowdock-notification-resource/github:token" ))
